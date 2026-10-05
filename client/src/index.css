@@ -1,0 +1,81 @@
+@import "tailwindcss";
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    background-color: #F4F6F5;
+    color: #1E293B;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* Custom subtle clean scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #EAEFEB;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #C2D6CB;
+    border-radius: 9999px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #9DBFA9;
+  }
+}
+
+/* TaskFlow Forest Green Design System Tokens */
+:root {
+  --color-forest: #194D33;
+  --color-forest-hover: #143F2A;
+  --color-forest-light: #EAF4EE;
+  --color-forest-mint: #CBE6D6;
+  --color-sage: #4E7B62;
+  --color-bg-page: #F4F6F5;
+  --color-card-border: #E5EAE6;
+}
+
+/* Card utilities */
+.card-clean {
+  background: #FFFFFF;
+  border: 1px solid #E5EAE6;
+  border-radius: 1.25rem;
+  box-shadow: 0 2px 12px -2px rgba(18, 38, 25, 0.03), 0 1px 3px 0 rgba(18, 38, 25, 0.02);
+}
+
+.card-forest {
+  background: linear-gradient(135deg, #194D33 0%, #153E2B 100%);
+  color: #FFFFFF;
+  border-radius: 1.25rem;
+  box-shadow: 0 10px 25px -5px rgba(25, 77, 51, 0.25);
+}
+
+.badge-mint {
+  background-color: #EAF4EE;
+  color: #194D33;
+  border: 1px solid #D2E7DC;
+}
+
+/* Subtle clean animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}

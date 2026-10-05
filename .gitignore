@@ -1,0 +1,46 @@
+# Dependencies
+node_modules/
+client/node_modules/
+server/node_modules/
+
+# Environment Variables & Credentials
+.env
+.env.*
+*.env
+*.env.local
+*.env.*.local
+client/.env
+server/.env
+
+# Exception: Allow environment template files
+!.env.example
+!client/.env.example
+!server/.env.example
+
+# Build outputs
+dist/
+dist-ssr/
+client/dist/
+build/
+
+# Logs & Diagnostics
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Editor & System Files
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+
+# SSL / Keys
+*.pem
+*.key
+*.cert
