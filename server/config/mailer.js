@@ -4,7 +4,23 @@ let transporter = null;
 
 // Initialize mail transporter with support for Google OAuth2, traditional SMTP, and Ethereal fallback
 const initMailer = async () => {
-  // Option 1: Gmail OAuth2 using GOOGLE_REFRESH_TOKEN, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, GOOGLE_USER
+  // Option 1: Traditional SMTP with App Password (preferred, most reliable for Gmail)
+  const smtpUser = process.env.EMAIL_USER || process.env.SMTP_USER || process.env.GOOGLE_USER;
+  const smtpPass = process.env.EMAIL_PASS || process.env.SMTP_PASS;
+
+  if (smtpUser && smtpPass) {
+    transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: smtpUser,
+        pass: smtpPass,
+      },
+    });
+    console.log(`[Mailer] Initialized Gmail SMTP transporter for user: ${smtpUser}`);
+    return;
+  }
+
+  // Option 2: Gmail OAuth2 using GOOGLE_REFRESH_TOKEN, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET
   if (
     process.env.GOOGLE_REFRESH_TOKEN &&
     process.env.GOOGLE_CLIENT_ID &&
@@ -27,24 +43,6 @@ const initMailer = async () => {
     } catch (err) {
       console.warn('[Mailer] Gmail OAuth2 initialization failed, checking SMTP fallback:', err.message);
     }
-  }
-
-  // Option 2: Traditional SMTP (EMAIL_USER / EMAIL_PASS or SMTP_USER / SMTP_PASS)
-  const smtpUser = process.env.EMAIL_USER || process.env.SMTP_USER;
-  const smtpPass = process.env.EMAIL_PASS || process.env.SMTP_PASS;
-
-  if (smtpUser && smtpPass) {
-    transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST || 'smtp.gmail.com',
-      port: parseInt(process.env.SMTP_PORT || '587', 10),
-      secure: process.env.SMTP_PORT === '465',
-      auth: {
-        user: smtpUser,
-        pass: smtpPass,
-      },
-    });
-    console.log(`[Mailer] Initialized standard SMTP transporter for user: ${smtpUser}`);
-    return;
   }
 
   // Option 3: Ethereal test account for dev mode / testing
