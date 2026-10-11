@@ -1,7 +1,20 @@
 import axios from 'axios';
 
+const getBaseURL = () => {
+  const envUrl = (import.meta.env.VITE_API_URL || '').trim();
+  if (!envUrl) return '/api';
+  
+  // If it's a full URL (e.g., https://my-backend.onrender.com)
+  if (envUrl.startsWith('http://') || envUrl.startsWith('https://')) {
+    const cleanUrl = envUrl.replace(/\/+$/, '');
+    return cleanUrl.endsWith('/api') ? cleanUrl : `${cleanUrl}/api`;
+  }
+  
+  return envUrl;
+};
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || '/api',
+  baseURL: getBaseURL(),
   headers: {
     'Content-Type': 'application/json',
   },
